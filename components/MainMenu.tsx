@@ -1,7 +1,8 @@
 import { Button } from "@react-navigation/elements";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { Ticket } from "types";
+import CalculateEarningsModal from "./CalculateEarningsModal";
 import DeleteButton from "./DeleteButton";
 import SearchTicketInput from "./SearchTicketInput";
 
@@ -18,6 +19,11 @@ export default function MainMenu({
   onDeleteAllTickets,
   onSearchTicket,
 }: MainMenuProps) {
+  const [showModal, setShowModal] = useState(false);
+
+  const onCancelModal = () => setShowModal(false);
+  const onShowModal = () => setShowModal(true);
+
   const totalTickets = useMemo(
     () => tickets.reduce((value, ticket) => value + ticket.quantity, 0),
     [tickets]
@@ -33,7 +39,13 @@ export default function MainMenu({
 
   return (
     <>
+      <CalculateEarningsModal
+        visible={showModal}
+        totalLitres={totalLitres}
+        onCancel={onCancelModal}
+      />
       <View style={{ alignItems: "center", gap: 35, width: "100%" }}>
+        <Button onPress={onShowModal}>Calcular ganancias totales</Button>
         <View style={{ gap: 3, alignItems: "center" }}>
           <Text
             style={{

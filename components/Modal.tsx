@@ -1,18 +1,29 @@
 import { Button } from "@react-navigation/elements";
-import { Modal as RNModal, Text, View } from "react-native";
+import { ReactNode } from "react";
+import {
+  Modal as RNModal,
+  StyleProp,
+  Text,
+  View,
+  ViewStyle,
+} from "react-native";
 
 type ModalProps = {
-  visible: boolean;
-  onAccept: () => void;
-  onCancel: () => void;
-  message: string;
+  visible?: boolean;
+  onAccept?: () => void;
+  onCancel?: () => void;
+  message?: string;
+  children?: ReactNode;
+  rootStyles?: StyleProp<ViewStyle>;
 };
 
 export default function Modal({
-  visible,
-  onAccept,
-  onCancel,
-  message,
+  visible = false,
+  onAccept = () => {},
+  onCancel = () => {},
+  message = "",
+  children,
+  rootStyles,
 }: ModalProps) {
   return (
     <RNModal transparent visible={visible}>
@@ -29,26 +40,31 @@ export default function Modal({
           style={{
             backgroundColor: "white",
             width: 300,
-            height: 140,
+            height: "auto",
             alignItems: "center",
             gap: 20,
-            paddingTop: 30,
+            padding: 30,
+            ...(rootStyles as Object),
           }}
         >
-          <Text
-            style={{
-              color: "black",
-              fontSize: 16,
-              textAlign: "center",
-              fontFamily: "sans-serif",
-            }}
-          >
-            {message}
-          </Text>
-          <View style={{ flexDirection: "row", gap: 10 }}>
-            <Button onPress={onAccept}>Aceptar</Button>
-            <Button onPress={onCancel}>Cancelar</Button>
-          </View>
+          {children || (
+            <>
+              <Text
+                style={{
+                  color: "black",
+                  fontSize: 16,
+                  textAlign: "center",
+                  fontFamily: "sans-serif",
+                }}
+              >
+                {message}
+              </Text>
+              <View style={{ flexDirection: "row", gap: 10 }}>
+                <Button onPress={onAccept}>Aceptar</Button>
+                <Button onPress={onCancel}>Cancelar</Button>
+              </View>
+            </>
+          )}
         </View>
       </View>
     </RNModal>
