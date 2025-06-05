@@ -36,36 +36,34 @@ export default function Modal({
           alignItems: "center",
         }}
       >
-        <View
-          style={{
-            backgroundColor: "white",
-            width: 300,
-            height: "auto",
-            alignItems: "center",
-            gap: 20,
-            padding: 30,
-            ...(rootStyles as Object),
-          }}
-        >
-          {children || (
-            <>
-              <Text
-                style={{
-                  color: "black",
-                  fontSize: 16,
-                  textAlign: "center",
-                  fontFamily: "sans-serif",
-                }}
-              >
-                {message}
-              </Text>
-              <View style={{ flexDirection: "row", gap: 10 }}>
-                <Button onPress={onAccept}>Aceptar</Button>
-                <Button onPress={onCancel}>Cancelar</Button>
-              </View>
-            </>
-          )}
-        </View>
+        {children || (
+          <View
+            style={{
+              backgroundColor: "white",
+              width: "70%",
+              height: "auto",
+              alignItems: "center",
+              gap: 20,
+              padding: 30,
+              ...(rootStyles as Object),
+            }}
+          >
+            <Text
+              style={{
+                color: "black",
+                fontSize: 16,
+                textAlign: "center",
+                fontFamily: "sans-serif",
+              }}
+            >
+              {message}
+            </Text>
+            <View style={{ flexDirection: "row", gap: 10 }}>
+              <Button onPress={onAccept}>Aceptar</Button>
+              <Button onPress={onCancel}>Cancelar</Button>
+            </View>
+          </View>
+        )}
       </View>
     </RNModal>
   );

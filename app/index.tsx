@@ -3,6 +3,7 @@ import TicketList from "@/components/TicketList";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { LayoutItem, Ticket } from "types";
 
 export default function Index() {
@@ -75,30 +76,32 @@ export default function Index() {
   }
 
   return (
-    <View
-      style={{
-        marginTop: 15,
-        width: "100%",
-        height: "100%",
-        gap: 40,
-        alignItems: "center",
-        paddingBottom: 70,
-      }}
-    >
-      <MainMenu
-        onSearchTicket={searchTicketHandler}
-        tickets={tickets}
-        onAddTicket={addTicketHandler}
-        onDeleteAllTickets={deleteAllTicketsHandler}
-      />
+    <SafeAreaProvider style={{ position: "relative" }}>
+      <View
+        style={{
+          marginTop: 15,
+          width: "100%",
+          height: "100%",
+          gap: 40,
+          alignItems: "center",
+          paddingBottom: 70,
+        }}
+      >
+        <MainMenu
+          onSearchTicket={searchTicketHandler}
+          tickets={tickets}
+          onAddTicket={addTicketHandler}
+          onDeleteAllTickets={deleteAllTicketsHandler}
+        />
 
-      <TicketList
-        onItemLayout={onLayout}
-        scrollRef={scrollRef}
-        tickets={tickets}
-        onEditTicket={editTicketHandler}
-        onDeleteTicket={deleteTicketHandler}
-      />
-    </View>
+        <TicketList
+          onItemLayout={onLayout}
+          scrollRef={scrollRef}
+          tickets={tickets}
+          onEditTicket={editTicketHandler}
+          onDeleteTicket={deleteTicketHandler}
+        />
+      </View>
+    </SafeAreaProvider>
   );
 }
