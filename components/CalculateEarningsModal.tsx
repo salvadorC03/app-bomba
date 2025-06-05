@@ -1,6 +1,6 @@
 import { Button } from "@react-navigation/elements";
 import { useEffect, useRef, useState } from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import { Text, TextInput, View } from "react-native";
 import Modal from "./Modal";
 import NumericInput from "./NumericInput";
 
@@ -41,7 +41,13 @@ export default function CalculateEarningsModal({
       return onCancel();
     }
 
-    if (isNaN(parseFloat(currentValue)) || parseFloat(currentValue) === 0) return;
+    if (ref.current?.isFocused()) {
+      ref.current.blur()
+      return
+    }
+
+    if (isNaN(parseFloat(currentValue)) || parseFloat(currentValue) === 0)
+      return;
 
     setSlides((prev) => {
       const newSlides = [...prev];
@@ -63,8 +69,17 @@ export default function CalculateEarningsModal({
   }, [visible]);
 
   return (
-    <Modal visible={visible} rootStyles={{}}>
-      <ScrollView style={{ flexGrow: 1 }} contentContainerStyle={{ gap: 20 }}>
+    <Modal visible={visible}>
+      <View
+        style={{
+          gap: 20,
+          backgroundColor: "white",
+          width: "90%",
+          height: "auto",
+          alignItems: "center",
+          padding: 30,
+        }}
+      >
         <Text
           style={{
             fontWeight: "bold",
@@ -178,7 +193,7 @@ export default function CalculateEarningsModal({
             <Button onPress={onCancel}>Cancelar</Button>
           )}
         </View>
-      </ScrollView>
+      </View>
     </Modal>
   );
 }
