@@ -1,5 +1,5 @@
 declare module "types" {
-  import { LayoutRectangle } from "react-native";
+  import { LayoutRectangle } from 'react-native';
 
   export type LayoutItem = {
     ticket: Ticket;
